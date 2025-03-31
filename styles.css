@@ -6,15 +6,13 @@ body {
 }
 
 header {
-    background-color: #007bff;
-    color: white;
+    color: rgb(0, 12, 237);
     padding: 1rem;
     text-align: center;
-    background-image: url('mm_flag.jpg'); /* Add background image */
-    background-size: contain; /* Ensure the image covers the header */
-    background-position: left; /* Center the image */
+    background-image: linear-gradient(to bottom, yellow 33%, green 33%, rgb(3, 255, 3) 66%, red 66%);
+    background-size: cover; /* Ensure the gradient covers the header */
+    background-position: center;
     background-repeat: no-repeat;
-    
 }
 
 main {
