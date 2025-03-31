@@ -21,13 +21,8 @@ def get_earthquake_data(min_magnitude=1.0, min_longitude=92, max_longitude=101, 
         return None
 
 def translate_to_myanmar(text):
-    """Automatically translate text to Myanmar using Google Translate."""
-    try:
-        translated = translator.translate(text, src='en', dest='my')
-        return translated.text
-    except Exception as e:
-        print(f"Translation error: {e}")
-        return text  # Return the original text if translation fails
+    """Temporarily bypass translation for debugging."""
+    return text
 
 @app.route('/api/earthquakes', methods=['GET'])
 def get_myanmar_earthquakes():
