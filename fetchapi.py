@@ -2,9 +2,12 @@ import requests
 import json
 from flask import Flask, jsonify
 from flask_cors import CORS
+from googletrans import Translator
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+
+translator = Translator()  # Initialize the Google Translate API
 
 def get_earthquake_data(min_magnitude=1.0, min_longitude=92, max_longitude=101, min_latitude=9, max_latitude=29):
     """Fetches earthquake data from USGS."""
@@ -17,6 +20,15 @@ def get_earthquake_data(min_magnitude=1.0, min_longitude=92, max_longitude=101, 
         print(f"Error fetching data: {response.status_code}")
         return None
 
+def translate_to_myanmar(text):
+    """Automatically translate text to Myanmar using Google Translate."""
+    try:
+        translated = translator.translate(text, src='en', dest='my')
+        return translated.text
+    except Exception as e:
+        print(f"Translation error: {e}")
+        return text  # Return the original text if translation fails
+
 @app.route('/api/earthquakes', methods=['GET'])
 def get_myanmar_earthquakes():
     """API endpoint to get earthquake data for Myanmar."""
@@ -25,7 +37,7 @@ def get_myanmar_earthquakes():
         filtered_data = [
             {
                 "magnitude": eq["properties"]["mag"],
-                "place": eq["properties"]["place"],
+                "place": translate_to_myanmar(eq["properties"]["place"]),
                 "time": eq["properties"]["time"],
                 "longitude": eq["geometry"]["coordinates"][0],
                 "latitude": eq["geometry"]["coordinates"][1],
