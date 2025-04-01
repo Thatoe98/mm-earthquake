@@ -3,6 +3,7 @@ import json
 from flask import Flask, jsonify
 from flask_cors import CORS
 from googletrans import Translator
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -11,7 +12,19 @@ translator = Translator()  # Initialize the Google Translate API
 
 def get_earthquake_data(min_magnitude=1.0, min_longitude=92, max_longitude=101, min_latitude=9, max_latitude=29):
     """Fetches earthquake data from USGS."""
-    url = f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minmagnitude={min_magnitude}&minlongitude={min_longitude}&maxlongitude={max_longitude}&minlatitude={min_latitude}&maxlatitude={max_latitude}"
+    # Get the current date and time
+    now = datetime.utcnow()
+    # Set the start time to 1 day ago (or adjust as needed)
+    start_time = (now - timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S")
+    # Format the current time
+    end_time = now.strftime("%Y-%m-%dT%H:%M:%S")
+
+    url = (
+        f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson"
+        f"&starttime={start_time}&endtime={end_time}"
+        f"&minmagnitude={min_magnitude}&minlongitude={min_longitude}"
+        f"&maxlongitude={max_longitude}&minlatitude={min_latitude}&maxlatitude={max_latitude}"
+    )
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()

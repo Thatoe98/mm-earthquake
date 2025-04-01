@@ -2,11 +2,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f4e4e4;
 }
 
 header {
-    color: rgb(0, 12, 237);
+    color: rgb(0, 0, 0);
     padding: 1rem;
     text-align: center;
     background-image: linear-gradient(to bottom, yellow 33%, green 33%, rgb(3, 255, 3) 66%, red 66%);
